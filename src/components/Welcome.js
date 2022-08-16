@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
+import {apiEndpoint} from "../App";
 
 const Welcome = () => {
     const [welcomeImages, setWelcomeImages] = useState([]);
     const loadWelcomeImages = async () => {
         // query API gateway
-        const response = await fetch('https://8x5rz53wlf.execute-api.us-west-2.amazonaws.com/Production/welcome_images');
+        const response = await fetch(apiEndpoint + '/welcome_images');
         let jsonData = await response.json();
         // assign response to state variable
         setWelcomeImages(jsonData);

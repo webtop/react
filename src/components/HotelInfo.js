@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {apiEndpoint} from "../App";
 
 const HotelInfo = () => {
     const [arrivalInfo, setArrivalInfo] = useState([]);
@@ -6,14 +7,13 @@ const HotelInfo = () => {
     const [accessibilityInfo, setAccessibilityInfo] = useState([]);
 
     const loadInfo = async () => {
-        const apiEndpoint = 'https://8x5rz53wlf.execute-api.us-west-2.amazonaws.com/Production/';
         const apiEndpointRequests = [
             {ep: 'arrival_info', fn: setArrivalInfo},
             {ep: 'services', fn: setServicesInfo},
             {ep: 'accessibilities', fn: setAccessibilityInfo}
         ];
         apiEndpointRequests.map(async (request) => {
-            const response = await fetch(apiEndpoint + request.ep);
+            const response = await fetch(apiEndpoint + '/' + request.ep);
             let jsonData = await response.json();
             request.fn(jsonData);
         });

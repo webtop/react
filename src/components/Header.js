@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import {apiEndpoint, mediaPath} from "../App";
 
 const Header = () => {
     const [menuLinksData, setMenuLinksData] = useState([]);
     const loadMenuLinksData = async () => {
         // query API gateway
-        const response = await fetch('https://8x5rz53wlf.execute-api.us-west-2.amazonaws.com/Production/menu_links');
+        const response = await fetch( apiEndpoint + '/menu_links');
         let jsonData = await response.json();
         // assign response to state variable
         setMenuLinksData(jsonData);
@@ -22,7 +23,7 @@ const Header = () => {
                   <h2>West London</h2>
                   <p>
                       <a href="#welcome">
-                          <img src="https://landonhotel.com/images/misc/arrow.png" alt="down arrow"/>
+                          <img src={`${mediaPath}/misc/arrow.png`} alt="down arrow"/>
                       </a>
                   </p>
                 </div>
