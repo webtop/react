@@ -1,9 +1,29 @@
-import React from "react";
-import arrivalInfo from './data/arrival_info.json';
-import servicesInfo from './data/services_info.json';
-import accessibilityInfo from './data/accessibility_info.json';
+import React, {useEffect, useState} from "react";
 
 const HotelInfo = () => {
+    const [arrivalInfo, setArrivalInfo] = useState([]);
+    const [servicesInfo, setServicesInfo] = useState([]);
+    const [accessibilityInfo, setAccessibilityInfo] = useState([]);
+
+    const loadInfo = async () => {
+        const apiEndpoint = 'https://8x5rz53wlf.execute-api.us-west-2.amazonaws.com/Production/';
+        const apiEndpointRequests = [
+            {ep: 'arrival_info', fn: setArrivalInfo},
+            {ep: 'services', fn: setServicesInfo},
+            {ep: 'accessibilities', fn: setAccessibilityInfo}
+        ];
+        apiEndpointRequests.map(async (request) => {
+            const response = await fetch(apiEndpoint + request.ep);
+            let jsonData = await response.json();
+            request.fn(jsonData);
+        });
+
+    };
+
+    useEffect(() => {
+        loadInfo();
+    }, []);
+
     return (
       <div className="scene" id="hotelinfo">
           <article className="heading">
